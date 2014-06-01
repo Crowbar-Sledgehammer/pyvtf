@@ -20,15 +20,28 @@ class skybox(object):
 		},
 		'Windows': {
 			'steamdir': path.realpath('/Program Files (x86)/Steam/'),
-			'steamcommon': path.realpath('/Program Files (x86)/Steam/SteamApps/common/'),
+			'steamcommon': path.realpath(
+				'/Program Files (x86)/Steam/SteamApps/common/'
+			),
 		},
 	}
 
 	def __init__(this, inputfile=None, crop_map='sdklegacy'):
 
-		this.path        = path.realpath('%(steamcommon)s/Team Fortress 2/bin/' % this.platform[system()])
-		this.materialsrc = path.realpath('%(steamcommon)s/Team Fortress 2/tf/materialsrc/pyvtf' % this.platform[system()])
-		this.uniquedir   = 'dev' #todo generate a unique path for eash runtime, part of safe parrallelization
+		# Valve binaries path
+		this.path = path.realpath(
+			'%(steamcommon)s/Team Fortress 2/bin/'
+			% this.platform[system()]
+		)
+		# Suitable game folder ./materialsrc/pyvtf
+		# This seems to let vavle binaries gind gameinfo.txt
+		this.materialsrc = path.realpath(
+			'%(steamcommon)s/Team Fortress 2/tf/materialsrc/pyvtf'
+			% this.platform[system()]
+		)
+
+		this.uniquedir   = 'dev' #todo generate a unique path for eash runtime,
+		                         #     part of safe parrallelization.
 		super(skybox, this).__init__()
 
 		this.crop(inputfile, crop_map)
@@ -58,7 +71,9 @@ class skybox(object):
 			'UP': (3/4,   0,   1, 1/3),
 		},
 		# See @sdk link, this is an older revision of the same file.
-		# https://developer.valvesoftware.com/w/images/archive/7/75/20091216021014%21Skybox_Template.jpg
+		#
+		# https://developer.valvesoftware.com
+		# /w/images/archive/7/75/20091216021014%21Skybox_Template.jpg
 		'sdklegacy': {
 			'BK': (  0, 1/3, 1/4, 2/3),
 			'DN': (1/4, 2/3, 2/4,   1),
